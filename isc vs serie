@@ -1,0 +1,7 @@
+i2c vs serie:
+	i2c es mas rapido			mejor i2c
+	i2c es de corto alcanze			da lo mismo
+	i2c tiene modelos master/slave		mejor serie (+ simple)
+	tendira que implementar i2c a mano	mejor serie (+ simple)
+
+	
