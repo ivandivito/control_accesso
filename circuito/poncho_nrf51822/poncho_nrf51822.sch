@@ -1,0 +1,312 @@
+EESchema Schematic File Version 2
+LIBS:Misc_Poncho_Grande
+LIBS:Poncho_Esqueleto
+LIBS:poncho_nrf51822
+LIBS:xilinx
+LIBS:valves
+LIBS:transistors
+LIBS:texas
+LIBS:siliconi
+LIBS:regul
+LIBS:power
+LIBS:philips
+LIBS:opto
+LIBS:motorola
+LIBS:microcontrollers
+LIBS:microchip
+LIBS:memory
+LIBS:linear
+LIBS:interface
+LIBS:intel
+LIBS:dsp
+LIBS:display
+LIBS:digital-audio
+LIBS:device
+LIBS:cypress
+LIBS:contrib
+LIBS:conn
+LIBS:cmos4000
+LIBS:audio
+LIBS:atmel
+LIBS:analog_switches
+LIBS:adc-dac
+LIBS:74xx
+LIBS:poncho_nrf51822-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title "Poncho Chico - Modelo - Ejemplo - Template"
+Date "2015-10-02"
+Rev "1.0"
+Comp "Proyecto CIAA - COMPUTADORA INDUSTRIAL ABIERTA ARGENTINA"
+Comment1 "https://github.com/ciaa/Ponchos/tree/master/modelos/doc"
+Comment2 "Autores y Licencia del template (Diego Brengi - UNLaM)"
+Comment3 "Autor del poncho (COMPLETAR NOMBRE Y APELLIDO). Ver directorio \"doc\""
+Comment4 "CÓDIGO PONCHO:"
+$EndDescr
+$Comp
+L OSHWA #G2
+U 1 1 560A0A28
+P 10800 6050
+F 0 "#G2" H 10770 6450 60  0001 C CNN
+F 1 "OSHWA" H 10800 6353 60  0001 C CNN
+F 2 "Poncho_Esqueleto:Logo_OSHWA" H 10800 6050 60  0001 C CNN
+F 3 "" H 10800 6050 60  0000 C CNN
+	1    10800 6050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Logo_Poncho #G1
+U 1 1 560CFFC0
+P 10150 6000
+F 0 "#G1" H 10100 5600 60  0001 C CNN
+F 1 "Logo_Poncho" H 10350 5600 60  0001 C CNN
+F 2 "Poncho_Esqueleto:Logo_Poncho" H 10150 6000 60  0001 C CNN
+F 3 "" H 10150 6000 60  0001 C CNN
+	1    10150 6000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Conn_PonchoMP_2x_20x2 XA1
+U 1 1 560E549A
+P 2450 1300
+F 0 "XA1" H 2300 1850 60  0000 C CNN
+F 1 "Conn_PonchoMP_2x_20x2" H 2750 1700 60  0000 C CNN
+F 2 "Poncho_Esqueleto:Conn_Poncho_Chico" H 3100 850 60  0000 C CNN
+F 3 "" H 2300 1650 60  0000 C CNN
+	1    2450 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Conn_PonchoMP_2x_20x2 XA1
+U 6 1 560E54EF
+P 1600 4250
+F 0 "XA1" H 1500 4550 60  0000 C CNN
+F 1 "Conn_PonchoMP_2x_20x2" H 1200 4450 60  0000 C CNN
+F 2 "" H 1450 4600 60  0000 C CNN
+F 3 "" H 1450 4600 60  0000 C CNN
+	6    1600 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Conn_PonchoMP_2x_20x2 XA1
+U 11 1 560E5596
+P 1800 2550
+F 0 "XA1" H 1700 3050 60  0000 C CNN
+F 1 "Conn_PonchoMP_2x_20x2" H 1450 2950 60  0000 C CNN
+F 2 "" H 1650 2900 60  0000 C CNN
+F 3 "" H 1650 2900 60  0000 C CNN
+	11   1800 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR01
+U 1 1 560EB677
+P 8750 1750
+F 0 "#PWR01" H 8750 1750 30  0001 C CNN
+F 1 "GND" H 8750 1680 30  0001 C CNN
+F 2 "" H 8750 1750 60  0000 C CNN
+F 3 "" H 8750 1750 60  0000 C CNN
+	1    8750 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L +3.3V #PWR02
+U 1 1 560EB699
+P 1750 1000
+F 0 "#PWR02" H 1750 960 30  0001 C CNN
+F 1 "+3.3V" H 1750 1110 30  0000 C CNN
+F 2 "" H 1750 1000 60  0000 C CNN
+F 3 "" H 1750 1000 60  0000 C CNN
+	1    1750 1000
+	1    0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR03
+U 1 1 560EB7BE
+P 1350 950
+F 0 "#PWR03" H 1350 1040 20  0001 C CNN
+F 1 "+5V" H 1350 1040 30  0000 C CNN
+F 2 "" H 1350 950 60  0000 C CNN
+F 3 "" H 1350 950 60  0000 C CNN
+	1    1350 950 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1550 1050 2000 1050
+Wire Wire Line
+	1750 1050 1750 1000
+Wire Wire Line
+	1350 1150 2000 1150
+Wire Wire Line
+	1350 950  1350 1150
+$Comp
+L PWR_FLAG #FLG08
+U 1 1 560EDD83
+P 1100 1050
+F 0 "#FLG08" H 1100 1145 30  0001 C CNN
+F 1 "PWR_FLAG" H 1100 1230 30  0000 C CNN
+F 2 "" H 1100 1050 60  0000 C CNN
+F 3 "" H 1100 1050 60  0000 C CNN
+	1    1100 1050
+	1    0    0    -1  
+$EndComp
+$Comp
+L PWR_FLAG #FLG09
+U 1 1 560EDDA1
+P 1550 1050
+F 0 "#FLG09" H 1550 1145 30  0001 C CNN
+F 1 "PWR_FLAG" H 1550 1230 30  0000 C CNN
+F 2 "" H 1550 1050 60  0000 C CNN
+F 3 "" H 1550 1050 60  0000 C CNN
+	1    1550 1050
+	1    0    0    -1  
+$EndComp
+Connection ~ 1750 1050
+Wire Wire Line
+	1350 1050 1100 1050
+Connection ~ 1350 1050
+$Comp
+L PWR_FLAG #FLG010
+U 1 1 560EDE73
+P 8400 1600
+F 0 "#FLG010" H 8400 1695 30  0001 C CNN
+F 1 "PWR_FLAG" H 8400 1780 30  0000 C CNN
+F 2 "" H 8400 1600 60  0000 C CNN
+F 3 "" H 8400 1600 60  0000 C CNN
+	1    8400 1600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Conn_PonchoMP_2x_20x2 XA1
+U 2 1 560EE110
+P 9450 1400
+F 0 "XA1" H 9300 1950 60  0000 C CNN
+F 1 "Conn_PonchoMP_2x_20x2" H 9750 1850 60  0000 C CNN
+F 2 "" H 9300 1750 60  0000 C CNN
+F 3 "" H 9300 1750 60  0000 C CNN
+	2    9450 1400
+	1    0    0    -1  
+$EndComp
+NoConn ~ 9000 1100
+NoConn ~ 9000 1600
+NoConn ~ 9900 1700
+NoConn ~ 9900 1600
+NoConn ~ 9900 1500
+NoConn ~ 9900 1400
+NoConn ~ 9900 1300
+NoConn ~ 2900 1050
+NoConn ~ 2900 1150
+NoConn ~ 2900 1250
+NoConn ~ 2900 1350
+$Comp
+L GND #PWR011
+U 1 1 560EE345
+P 10100 1300
+F 0 "#PWR011" H 10100 1300 30  0001 C CNN
+F 1 "GND" H 10100 1230 30  0001 C CNN
+F 2 "" H 10100 1300 60  0000 C CNN
+F 3 "" H 10100 1300 60  0000 C CNN
+	1    10100 1300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9900 1200 10100 1200
+Wire Wire Line
+	10100 1100 10100 1300
+Wire Wire Line
+	9900 1100 10100 1100
+Connection ~ 10100 1200
+NoConn ~ 2000 1250
+$Comp
+L +5VP #PWR012
+U 1 1 560EE7D3
+P 8650 1100
+F 0 "#PWR012" H 8650 1190 20  0001 C CNN
+F 1 "+5VP" H 8650 1190 30  0000 C CNN
+F 2 "" H 8650 1100 60  0000 C CNN
+F 3 "" H 8650 1100 60  0000 C CNN
+	1    8650 1100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8400 1200 9000 1200
+Wire Wire Line
+	8650 1200 8650 1100
+$Comp
+L PWR_FLAG #FLG013
+U 1 1 560EE826
+P 8400 1200
+F 0 "#FLG013" H 8400 1295 30  0001 C CNN
+F 1 "PWR_FLAG" H 8400 1380 30  0000 C CNN
+F 2 "" H 8400 1200 60  0000 C CNN
+F 3 "" H 8400 1200 60  0000 C CNN
+	1    8400 1200
+	1    0    0    -1  
+$EndComp
+Connection ~ 8650 1200
+Wire Wire Line
+	9000 1300 8750 1300
+Wire Wire Line
+	8750 1300 8750 1750
+Wire Wire Line
+	9000 1400 8750 1400
+Connection ~ 8750 1400
+Wire Wire Line
+	8750 1500 9000 1500
+Connection ~ 8750 1500
+Wire Wire Line
+	8400 1600 8750 1600
+Connection ~ 8750 1600
+NoConn ~ 2900 1450
+NoConn ~ 2900 1550
+NoConn ~ 2000 1550
+NoConn ~ 2000 1450
+NoConn ~ 2000 1350
+$Comp
+L yunjia_nrf51822 U?
+U 1 1 591B2E97
+P 6250 4200
+F 0 "U?" H 6250 4200 60  0000 C CNN
+F 1 "yunjia_nrf51822" H 6250 5200 60  0000 C CNN
+F 2 "" H 7900 6350 60  0001 C CNN
+F 3 "" H 7900 6350 60  0001 C CNN
+	1    6250 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Conn_PonchoMP_2x_20x2 XA?
+U 5 1 591B3B08
+P 1500 5150
+F 0 "XA?" H 1500 5700 60  0000 C CNN
+F 1 "Conn_PonchoMP_2x_20x2" H 1500 5600 60  0000 C CNN
+F 2 "" H 1350 5500 60  0000 C CNN
+F 3 "" H 1350 5500 60  0000 C CNN
+	5    1500 5150
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_01X18 J?
+U 1 1 591B3E0B
+P 4850 4200
+F 0 "J?" H 4850 5150 50  0000 C CNN
+F 1 "CONN_01X18" V 4950 4200 50  0000 C CNN
+F 2 "" H 4850 4200 50  0001 C CNN
+F 3 "" H 4850 4200 50  0001 C CNN
+	1    4850 4200
+	-1   0    0    1   
+$EndComp
+$Comp
+L CONN_01X18 J?
+U 1 1 591B3ECE
+P 7650 4200
+F 0 "J?" H 7650 5150 50  0000 C CNN
+F 1 "CONN_01X18" V 7750 4200 50  0000 C CNN
+F 2 "" H 7650 4200 50  0001 C CNN
+F 3 "" H 7650 4200 50  0001 C CNN
+	1    7650 4200
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
