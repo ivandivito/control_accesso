@@ -1,4 +1,4 @@
-update=mar 16 may 2017 13:30:54 -03
+update=mié 17 may 2017 16:53:35 -03
 version=1
 last_client=kicad
 [cvpcb]
@@ -62,3 +62,4 @@ LibName29=atmel
 LibName30=analog_switches
 LibName31=adc-dac
 LibName32=74xx
+LibName33=switches
