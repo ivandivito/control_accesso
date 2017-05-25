@@ -83,12 +83,12 @@ $EndComp
 $Comp
 L Conn_PonchoMP_2x_20x2 XA1
 U 11 1 560E5596
-P 2550 2900
-F 0 "XA1" H 2450 3400 60  0000 C CNN
-F 1 "Conn_PonchoMP_2x_20x2" H 2200 3300 60  0000 C CNN
-F 2 "footprints:Conn_Poncho_Chico" H 2400 3250 60  0001 C CNN
-F 3 "" H 2400 3250 60  0000 C CNN
-	11   2550 2900
+P 1700 2900
+F 0 "XA1" H 1600 3400 60  0000 C CNN
+F 1 "Conn_PonchoMP_2x_20x2" H 1350 3300 60  0000 C CNN
+F 2 "footprints:Conn_Poncho_Chico" H 1550 3250 60  0001 C CNN
+F 3 "" H 1550 3250 60  0000 C CNN
+	11   1700 2900
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -127,23 +127,23 @@ $EndComp
 $Comp
 L CONN_01X18 J1
 U 1 1 591B3E0B
-P 3750 4200
-F 0 "J1" H 3750 5150 50  0000 C CNN
-F 1 "CONN_01X18" V 3850 4200 50  0000 C CNN
-F 2 "footprints:Pin_Header_Straight_1x18_Pitch2.54mm" H 3750 4200 50  0001 C CNN
-F 3 "" H 3750 4200 50  0001 C CNN
-	1    3750 4200
+P 3350 4200
+F 0 "J1" H 3350 5150 50  0000 C CNN
+F 1 "CONN_01X18" V 3450 4200 50  0000 C CNN
+F 2 "footprints:Pin_Header_Straight_1x18_Pitch2.54mm" H 3350 4200 50  0001 C CNN
+F 3 "" H 3350 4200 50  0001 C CNN
+	1    3350 4200
 	-1   0    0    1   
 $EndComp
 $Comp
 L CONN_01X18 J4
 U 1 1 591B3ECE
-P 8600 4200
-F 0 "J4" H 8600 5150 50  0000 C CNN
-F 1 "CONN_01X18" V 8700 4200 50  0000 C CNN
-F 2 "footprints:Pin_Header_Straight_1x18_Pitch2.54mm" H 8600 4200 50  0001 C CNN
-F 3 "" H 8600 4200 50  0001 C CNN
-	1    8600 4200
+P 8850 4200
+F 0 "J4" H 8850 5150 50  0000 C CNN
+F 1 "CONN_01X18" V 8950 4200 50  0000 C CNN
+F 2 "footprints:Pin_Header_Straight_1x18_Pitch2.54mm" H 8850 4200 50  0001 C CNN
+F 3 "" H 8850 4200 50  0001 C CNN
+	1    8850 4200
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -206,22 +206,14 @@ Text Label 9900 2950 2    60   ~ 0
 CiaaSda
 Text Label 9900 2450 2    60   ~ 0
 CiaaScl
-Text Label 9900 3850 2    60   ~ 0
-n51Tx
-Text Label 9900 3350 2    60   ~ 0
-n51Rx
-Text Label 9900 2850 2    60   ~ 0
-n51Sda
-Text Label 9900 2350 2    60   ~ 0
-n51Scl
 Text Label 7450 4550 0    60   ~ 0
-n51Tx
+n51Tx(P09)
 Text Label 7450 4350 0    60   ~ 0
-n51Rx
+n51Rx(P11)
 Text Label 7450 4750 0    60   ~ 0
-n51Scl
+n51Scl(P07)
 Text Label 7450 4950 0    60   ~ 0
-n51Sda
+n51Sda(P05)
 $Comp
 L CONN_01X03 J2
 U 1 1 591CCC46
@@ -363,12 +355,12 @@ $EndComp
 $Comp
 L +3.3V #PWR010
 U 1 1 591CFAEB
-P 4600 4250
-F 0 "#PWR010" H 4600 4210 30  0001 C CNN
-F 1 "+3.3V" H 4600 4360 30  0000 C CNN
-F 2 "" H 4600 4250 60  0000 C CNN
-F 3 "" H 4600 4250 60  0000 C CNN
-	1    4600 4250
+P 4400 4250
+F 0 "#PWR010" H 4400 4210 30  0001 C CNN
+F 1 "+3.3V" H 4400 4360 30  0000 C CNN
+F 2 "" H 4400 4250 60  0000 C CNN
+F 3 "" H 4400 4250 60  0000 C CNN
+	1    4400 4250
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -385,40 +377,28 @@ $EndComp
 $Comp
 L GND #PWR012
 U 1 1 591CFCD5
-P 4600 4550
-F 0 "#PWR012" H 4600 4550 30  0001 C CNN
-F 1 "GND" H 4600 4480 30  0001 C CNN
-F 2 "" H 4600 4550 60  0000 C CNN
-F 3 "" H 4600 4550 60  0000 C CNN
-	1    4600 4550
+P 4400 4550
+F 0 "#PWR012" H 4400 4550 30  0001 C CNN
+F 1 "GND" H 4400 4480 30  0001 C CNN
+F 2 "" H 4400 4550 60  0000 C CNN
+F 3 "" H 4400 4550 60  0000 C CNN
+	1    4400 4550
 	1    0    0    -1  
 $EndComp
 Text Label 7450 3750 0    60   ~ 0
 SWDIO
-NoConn ~ 3000 3200
-NoConn ~ 3000 3000
-NoConn ~ 3000 2800
-NoConn ~ 3000 2600
-Text Label 3000 2700 0    60   ~ 0
-GPIO1
-Text Label 3000 2900 0    60   ~ 0
-GPIO2
-Text Label 3000 3100 0    60   ~ 0
-GPIO3
-Text Label 3000 3300 0    60   ~ 0
-GPIO4
+NoConn ~ 2150 3200
+NoConn ~ 2150 3000
+NoConn ~ 2150 2800
+NoConn ~ 2150 2600
 Text Label 5050 4750 2    60   ~ 0
-GPIO1
-Text Label 3950 4550 0    60   ~ 0
-GPIO2
+GPIO1(P01)
 Text Label 5050 5050 2    60   ~ 0
-GPIO3
+GPIO3(P04)
 Text Label 5050 4850 2    60   ~ 0
-GPIO4
+GPIO4(P02)
 Text Label 5050 4650 2    60   ~ 0
-GPIO5
-Text Label 3000 3400 0    60   ~ 0
-GPIO5
+GPIO5(P00)
 $Comp
 L GND #PWR013
 U 1 1 591D241A
@@ -497,8 +477,6 @@ F 3 "" H 2950 4500 60  0000 C CNN
 	1    2950 4500
 	1    0    0    -1  
 $EndComp
-Text Label 2300 3900 2    60   ~ 0
-LedCont
 $Comp
 L R R2
 U 1 1 591D46D9
@@ -675,10 +653,6 @@ Wire Wire Line
 Wire Wire Line
 	800  1450 800  1250
 Wire Wire Line
-	4600 4350 4600 4250
-Wire Wire Line
-	4600 4450 4600 4550
-Wire Wire Line
 	4600 3350 4600 3450
 Wire Wire Line
 	9900 1100 10000 1100
@@ -777,8 +751,6 @@ F 3 "" H 3000 5250 60  0000 C CNN
 	1    3000 5250
 	1    0    0    -1  
 $EndComp
-Text Label 1900 5150 2    60   ~ 0
-BtnCont
 Wire Wire Line
 	1900 5150 2000 5150
 Wire Wire Line
@@ -795,11 +767,11 @@ F 3 "" H 2400 4600 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Text Label 7450 3950 0    60   ~ 0
-BtnCont
+BtnCont(P15)
 Wire Wire Line
-	5450 4350 4600 4350
+	4400 4350 5450 4350
 Wire Wire Line
-	4600 4450 5450 4450
+	4400 4450 5450 4450
 Text Label 5050 3450 2    60   ~ 0
 P21
 Text Label 5050 3550 2    60   ~ 0
@@ -835,127 +807,103 @@ Wire Wire Line
 $Comp
 L GND #PWR021
 U 1 1 591D9775
-P 4200 3850
-F 0 "#PWR021" H 4200 3850 30  0001 C CNN
-F 1 "GND" H 4200 3780 30  0001 C CNN
-F 2 "" H 4200 3850 60  0000 C CNN
-F 3 "" H 4200 3850 60  0000 C CNN
-	1    4200 3850
+P 3800 3850
+F 0 "#PWR021" H 3800 3850 30  0001 C CNN
+F 1 "GND" H 3800 3780 30  0001 C CNN
+F 2 "" H 3800 3850 60  0000 C CNN
+F 3 "" H 3800 3850 60  0000 C CNN
+	1    3800 3850
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3950 3750 4200 3750
+	3550 3750 3800 3750
 Wire Wire Line
-	4200 3750 4200 3850
-Text Label 3950 3850 0    60   ~ 0
+	3800 3750 3800 3850
+Text Label 3550 3850 0    60   ~ 0
 P22
-Text Label 3950 3950 0    60   ~ 0
+Text Label 3550 3950 0    60   ~ 0
 P24
-Text Label 3950 4050 0    60   ~ 0
+Text Label 3550 4050 0    60   ~ 0
 P26
-Text Label 3950 4150 0    60   ~ 0
+Text Label 3550 4150 0    60   ~ 0
 P28
 $Comp
 L +3.3V #PWR022
 U 1 1 591D9B75
-P 4200 4200
-F 0 "#PWR022" H 4200 4160 30  0001 C CNN
-F 1 "+3.3V" H 4200 4310 30  0000 C CNN
-F 2 "" H 4200 4200 60  0000 C CNN
-F 3 "" H 4200 4200 60  0000 C CNN
-	1    4200 4200
+P 3800 4200
+F 0 "#PWR022" H 3800 4160 30  0001 C CNN
+F 1 "+3.3V" H 3800 4310 30  0000 C CNN
+F 2 "" H 3800 4200 60  0000 C CNN
+F 3 "" H 3800 4200 60  0000 C CNN
+	1    3800 4200
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3950 4250 4200 4250
+	3550 4250 3800 4250
 Wire Wire Line
-	4200 4250 4200 4200
-Text Label 3950 4450 0    60   ~ 0
-GPIO1
-Text Label 3950 4650 0    60   ~ 0
-GPIO3
-Text Label 3950 4850 0    60   ~ 0
-GPIO5
-Text Label 3950 4750 0    60   ~ 0
-GPIO4
+	3800 4250 3800 4200
 Text Label 5050 4950 2    60   ~ 0
-GPIO2
+GPIO2(P03)
 $Comp
 L GND #PWR023
 U 1 1 591DA538
-P 4400 5050
-F 0 "#PWR023" H 4400 5050 30  0001 C CNN
-F 1 "GND" H 4400 4980 30  0001 C CNN
-F 2 "" H 4400 5050 60  0000 C CNN
-F 3 "" H 4400 5050 60  0000 C CNN
-	1    4400 5050
+P 4200 5050
+F 0 "#PWR023" H 4200 5050 30  0001 C CNN
+F 1 "GND" H 4200 4980 30  0001 C CNN
+F 2 "" H 4200 5050 60  0000 C CNN
+F 3 "" H 4200 5050 60  0000 C CNN
+	1    4200 5050
 	1    0    0    -1  
 $EndComp
-Text Label 3950 3350 0    60   ~ 0
+Text Label 3550 3350 0    60   ~ 0
 P27
-Text Label 3950 3450 0    60   ~ 0
+Text Label 3550 3450 0    60   ~ 0
 P25
-Text Label 3950 3550 0    60   ~ 0
+Text Label 3550 3550 0    60   ~ 0
 P23
-Text Label 3950 3650 0    60   ~ 0
+Text Label 3550 3650 0    60   ~ 0
 P21
-Text Label 8400 3450 2    60   ~ 0
+Text Label 8650 3450 2    60   ~ 0
 SWDIO
-Text Label 8400 3550 2    60   ~ 0
+Text Label 8650 3550 2    60   ~ 0
 P17
-Text Label 8400 3350 2    60   ~ 0
-BtnCont
-Text Label 8400 3850 2    60   ~ 0
+Text Label 8650 3850 2    60   ~ 0
 P19
-Text Label 8400 3950 2    60   ~ 0
+Text Label 8650 3950 2    60   ~ 0
 SWCLK
-Text Label 8400 4050 2    60   ~ 0
+Text Label 8650 4050 2    60   ~ 0
 P16
-Text Label 8400 4150 2    60   ~ 0
+Text Label 8650 4150 2    60   ~ 0
 P14
-Text Label 8400 4250 2    60   ~ 0
+Text Label 8650 4250 2    60   ~ 0
 P12
-Text Label 8400 4650 2    60   ~ 0
-n51Sda
-Text Label 8400 4950 2    60   ~ 0
-n51Rx
-Text Label 8400 4550 2    60   ~ 0
+Text Label 8650 4550 2    60   ~ 0
 P06
-Text Label 8400 4850 2    60   ~ 0
-n51Tx
-Text Label 8400 4750 2    60   ~ 0
-n51Scl
-Text Label 8400 5050 2    60   ~ 0
+Text Label 8650 5050 2    60   ~ 0
 P13
 Text Label 7450 3350 0    60   ~ 0
 P18
-Text Label 8400 3650 2    60   ~ 0
+Text Label 8650 3650 2    60   ~ 0
 P18
 Text Label 5050 4250 2    60   ~ 0
-LedCont
-Text Label 3950 5050 0    60   ~ 0
-LedCont
+LedCont(P29)
 Wire Wire Line
-	3950 4950 4400 4950
-Wire Wire Line
-	4400 4950 4400 5050
+	3550 4950 4200 4950
 Text Label 5050 4550 2    60   ~ 0
-P30
-Text Label 3950 4350 0    60   ~ 0
 P30
 Text Label 7450 3850 0    60   ~ 0
 SWCLK
 Text Label 7450 3450 0    60   ~ 0
 P20
-Text Label 8400 3750 2    60   ~ 0
+Text Label 8650 3750 2    60   ~ 0
 P20
 Text Label 7450 4650 0    60   ~ 0
 P10
 Text Label 7450 4850 0    60   ~ 0
 P08
-Text Label 8400 4450 2    60   ~ 0
+Text Label 8650 4450 2    60   ~ 0
 P08
-Text Label 8400 4350 2    60   ~ 0
+Text Label 8650 4350 2    60   ~ 0
 P10
 Text Label 2250 1050 2    60   ~ 0
 CiaaVcc
@@ -971,4 +919,56 @@ F 3 "" H 2550 1650 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 NoConn ~ 9000 1100
+Wire Wire Line
+	4400 4350 4400 4250
+Wire Wire Line
+	4400 4450 4400 4550
+Text Label 1900 5150 2    60   ~ 0
+BtnCont(P15)
+Text Label 2300 3900 2    60   ~ 0
+LedCont(P29)
+Text Label 2150 2700 0    60   ~ 0
+GPIO1(P01)
+Text Label 2150 2900 0    60   ~ 0
+GPIO2(P03)
+Text Label 2150 3100 0    60   ~ 0
+GPIO3(P04)
+Text Label 2150 3300 0    60   ~ 0
+GPIO4(P02)
+Text Label 2150 3400 0    60   ~ 0
+GPIO5(P00)
+Text Label 8650 3350 2    60   ~ 0
+BtnCont(P15)
+Text Label 8650 4650 2    60   ~ 0
+n51Sda(P05)
+Text Label 8650 4750 2    60   ~ 0
+n51Scl(P07)
+Text Label 8650 4850 2    60   ~ 0
+n51Tx(P09)
+Text Label 8650 4950 2    60   ~ 0
+n51Rx(P11)
+Text Label 3550 4350 0    60   ~ 0
+P30
+Text Label 3550 4450 0    60   ~ 0
+GPIO1(P01)
+Text Label 3550 4550 0    60   ~ 0
+GPIO2(P03)
+Text Label 3550 4650 0    60   ~ 0
+GPIO3(P04)
+Text Label 3550 4750 0    60   ~ 0
+GPIO4(P02)
+Text Label 3550 4850 0    60   ~ 0
+GPIO5(P00)
+Text Label 3550 5050 0    60   ~ 0
+LedCont(P29)
+Wire Wire Line
+	4200 4950 4200 5050
+Text Label 9900 2350 2    60   ~ 0
+n51Scl(P07)
+Text Label 9900 2850 2    60   ~ 0
+n51Sda(P05)
+Text Label 9900 3350 2    60   ~ 0
+n51Rx(P11)
+Text Label 9900 3850 2    60   ~ 0
+n51Tx(P09)
 $EndSCHEMATC
