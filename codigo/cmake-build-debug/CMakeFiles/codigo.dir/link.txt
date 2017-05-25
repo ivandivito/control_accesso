@@ -1,1 +1,0 @@
-/home/ivan-ubuntu/.platformio/packages/toolchain-gccarmnoneeabi/bin/arm-none-eabi-g++   -g   CMakeFiles/codigo.dir/src/main.cpp.o  -o codigo -rdynamic 
