@@ -1,0 +1,83 @@
+
+añadir lib_deps = ble-nrf51822 a platfomio.ini al modelo para descargar la libreria
+
+hay que ir al archivo /home/ivan-ubuntu/Documents/nrf51822/pio/.piolibdeps/ble_ID296/source/BLE.cpp
+y comentar la implementacion de createBLEInstance
+(por alguna razon esa implementacion debil pisa la fuerte que esta en la dependecia nrf51-sdk)
+
+para programar:
+openocd -d2 -f openocd.cfg -c "init_reset halt; init; halt; nrf51 mass_erase; sleep 500; reset halt; flash write_image s130_nrf51_1.0.0_softdevice.hex 0; flash write_image .pioenvs/test/firmware.hex 0; verify_image s130_nrf51_1.0.0_softdevice.hex 0; verify_image .pioenvs/test/firmware.hex 0; reset run; exit"
+
+instrucciones:
+
+-inicializar platformio:
+pio init --ide clion --board nrf51822_y5_mbug
+
+-abrir proyecto con clion y modificar archivo platformio.ini para que quede asi (si cambian proyecto por otro nombre van a tenre qeu cambiarlo en donde diga proyecto mas abajo):
+
+[env:proyecto]
+platform = nordicnrf51
+board = nrf51822_y5_mbug
+framework = mbed
+lib_deps = ble-nrf51822
+
+-crear un archivo main.cpp en src ej que parpadea led y envia por serie:
+
+#include "mbed.h"
+
+DigitalOut led1(P0_29);
+Serial pc(P0_9, P0_11);
+
+void periodicCallback(void)
+{
+    led1 = !led1;
+    pc.printf("hola\n");
+}
+
+int main(void)
+{
+
+    pc.baud(115200);
+    Ticker ticker;
+    ticker.attach(periodicCallback, 1); // blink LED every second
+
+    while (1) {
+
+    }
+}
+
+-refreshear cmake con la opcion tools/cmake/reset cache and reload proyect
+
+-hacer un PLATFORMIO_BUILD que va a fallar solo para que descargue lo que hace falta
+
+-crear o copiar archivo openocd.cfg contenido:
+
+#nRF51822 Target
+source [find interface/stlink-v2.cfg]
+
+transport select hla_swd
+
+set WORKAREASIZE 0x4000
+source [find target/nrf51.cfg]
+
+-copiar a la carpeta del proyecto el softdevice el archivo se llamas130_nrf51_1.0.0_softdevice.hex y esta en:
+
+/home/(usuario)/.platformio/packages/framework-mbed/targets/TARGET_NORDIC/TARGET_MCU_NRF51822/Lib/
+
+- ir al archivo (carpeta del proyecto)/.piolibdeps/ble_ID296/source/BLE.cpp y comentar la implementacion de createBLEInstance
+tiene que quedar asi:
+
+// this stub is required by ARMCC otherwise link will systematically fail
+/*
+MBED_WEAK BLEInstanceBase* createBLEInstance() {
+    error("Please provide an implementation for mbed BLE");
+    return NULL;
+}
+*/
+
+-volver a hacer un PLATFORMIO_BUILD que ahora tiene que funcionar
+
+-correr el siguiente comando con la placa conectada (supongo que tienen instalado openocd y estan con al terminal parados en la carpeta del proyecto):
+
+openocd -d2 -f openocd.cfg -c "init_reset halt; init; halt; nrf51 mass_erase; sleep 500; reset halt; flash write_image s130_nrf51_1.0.0_softdevice.hex 0; flash write_image .pioenvs/proyecto/firmware.hex 0; verify_image s130_nrf51_1.0.0_softdevice.hex 0; verify_image .pioenvs/proyecto/firmware.hex 0; reset run; exit"
+
