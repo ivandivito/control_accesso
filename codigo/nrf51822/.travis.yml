@@ -54,9 +54,9 @@
 #         - "~/.platformio"
 #
 # env:
-#     - PLATFORMIO_CI_SRC=path/to/test/file.c
+#     - PLATFORMIO_CI_SRC=path/to/hrm.cpp/file.c
 #     - PLATFORMIO_CI_SRC=examples/file.ino
-#     - PLATFORMIO_CI_SRC=path/to/test/directory
+#     - PLATFORMIO_CI_SRC=path/to/hrm.cpp/directory
 #
 # install:
 #     - pip install -U platformio

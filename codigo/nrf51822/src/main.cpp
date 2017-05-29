@@ -1,103 +1,105 @@
-/*
-DigitalOut led1(P0_29);
 
-led1 = 0;
-wait(1);
-pc.baud(115200);
-pc.printf("init\n");
-*/
-
+//#define MAIN_DEBUG
 
 #include "mbed.h"
-#include "features/FEATURE_BLE/ble/BLE.h"
-#include "features/FEATURE_BLE/ble/services/HeartRateService.h"
-#include "features/FEATURE_BLE/ble/services/BatteryService.h"
-#include "features/FEATURE_BLE/ble/services/DeviceInformationService.h"
+#include "mbed_events.h"
+#include "ble/BLE.h"
+#include "IBeaconAdvPackageData.h"
+#include "Beacon.h"
 
-DigitalOut led1(P0_29);
-Serial pc(P0_9, P0_11);
+EventQueue eventQueue(/* event count */ 16 * EVENTS_EVENT_SIZE);
 
-const static char     DEVICE_NAME[]        = "HRM1";
-static const uint16_t uuid16_list[]        = {GattService::UUID_HEART_RATE_SERVICE,
-                                              GattService::UUID_DEVICE_INFORMATION_SERVICE};
-static volatile bool  triggerSensorPolling = false;
-
-uint8_t hrmCounter = 100; // init HRM to 100bps
-
-HeartRateService         *hrService;
-DeviceInformationService *deviceInfo;
-
-void disconnectionCallback(const Gap::DisconnectionCallbackParams_t *params)
-{
-    BLE::Instance(BLE::DEFAULT_INSTANCE).gap().startAdvertising(); // restart advertising
-}
-
+DigitalOut led(P0_29, 1);
+Serial pc(P0_9,P0_11);
 
 void periodicCallback(void)
 {
-    led1 = !led1;
+    led = !led; /* blink poncho led */
+}
 
-    triggerSensorPolling = true;
+void advertisementCallback(const Gap::AdvertisementCallbackParams_t *params)
+{
+
+#ifdef MAIN_DEBUG
+    pc.printf("Adv peerAddr: [%02x %02x %02x %02x %02x %02x] rssi %d, ScanResp: %u, AdvType: %u, AdvLen: %u\r\n",
+           params->peerAddr[5], params->peerAddr[4], params->peerAddr[3], params->peerAddr[2], params->peerAddr[1], params->peerAddr[0],
+           params->rssi, params->isScanResponse, params->type, params->advertisingDataLen);
+    for (unsigned index = 0; index < params->advertisingDataLen; index++) {
+        pc.printf("%02x ", params->advertisingData[index]);
+    }
+    pc.printf("\r\n");
+#endif
+
+    if(!BleIBeacon::isAdvertisingDatafromIBeacon(params->advertisingData,params->advertisingDataLen)){
+        return;
+    }
+
+    BleIBeacon::IBeaconPayload_t *IBeaconPayload = (BleIBeacon::IBeaconPayload_t *) params->advertisingData;
+    uint16_t majorNumber = IBeaconPayload->majorNumberL | IBeaconPayload->majorNumberH << 8;
+    uint16_t minorNumber = IBeaconPayload->minorNumberL | IBeaconPayload->minorNumberH << 8;
+
+#ifdef MAIN_DEBUG
+    pc.puts("beacon addr ");
+    pc.printf("largo: %d :",sizeof(params->peerAddr));
+    for (size_t i=0; i< sizeof(params->peerAddr); i++) {
+        printf("%02x ", params->peerAddr[i]);
+    }
+    pc.printf("rssi %d ", params->rssi);
+    pc.puts("UUID ");
+    pc.printf("largo: %d :",sizeof(IBeaconPayload->beaconUUID));
+    for (size_t i=0; i< sizeof(IBeaconPayload->beaconUUID); i++) {
+        printf("%02x ", IBeaconPayload->beaconUUID[i]);
+    }
+    pc.printf("major: %lu ", (unsigned long) majorNumber);
+    pc.printf("minor: %lu ", (unsigned long) minorNumber);
+    pc.printf("rssi ref: %d", IBeaconPayload->rssiRef);
+    pc.puts("\r\n");
+#endif
+
+    Beacon beacon(majorNumber,minorNumber,256-IBeaconPayload->rssiRef);
+    double dist = beacon.calcDistance(-(params->rssi));
+
+#ifdef MAIN_DEBUG
+    pc.printf("ref: %lu rssi: %d distance: %f \r\n", beacon.getDistanceRef(), -(params->rssi), dist);
+#endif
+
+
 }
 
 void bleInitComplete(BLE::InitializationCompleteCallbackContext *params)
 {
-    BLE &ble          = params->ble;
+    BLE&        ble   = params->ble;
     ble_error_t error = params->error;
 
     if (error != BLE_ERROR_NONE) {
         return;
     }
 
-    ble.gap().onDisconnection(disconnectionCallback);
+    if (ble.getInstanceID() != BLE::DEFAULT_INSTANCE) {
+        return;
+    }
 
-    /* Setup primary service. */
-    hrService = new HeartRateService(ble, hrmCounter, HeartRateService::LOCATION_FINGER);
-
-    /* Setup auxiliary service. */
-    deviceInfo = new DeviceInformationService(ble, "ARM", "Model1", "SN1", "hw-rev1", "fw-rev1", "soft-rev1");
-
-    /* Setup advertising. */
-    ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::BREDR_NOT_SUPPORTED | GapAdvertisingData::LE_GENERAL_DISCOVERABLE);
-    ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LIST_16BIT_SERVICE_IDS, (uint8_t *)uuid16_list, sizeof(uuid16_list));
-    ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::GENERIC_HEART_RATE_SENSOR);
-    ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LOCAL_NAME, (uint8_t *)DEVICE_NAME, sizeof(DEVICE_NAME));
-    ble.gap().setAdvertisingType(GapAdvertisingParams::ADV_CONNECTABLE_UNDIRECTED);
-    ble.gap().setAdvertisingInterval(1000); /* 1000ms */
-    ble.gap().startAdvertising();
+    ble.gap().setScanParams(1800 /* scan interval */, 1500 /* scan window */);
+    ble.gap().startScan(advertisementCallback);
 }
 
-int main(void)
+void scheduleBleEventsProcessing(BLE::OnEventsToProcessCallbackContext* context) {
+    BLE &ble = BLE::Instance();
+    eventQueue.call(Callback<void()>(&ble, &BLE::processEvents));
+}
+
+int main()
 {
-    led1 = 0;
     pc.baud(115200);
+    pc.printf("init\r\n");
 
-    Ticker ticker;
-    ticker.attach(periodicCallback, 1); // blink LED every second
+    eventQueue.call_every(1000, periodicCallback);
 
-    BLE& ble = BLE::Instance(BLE::DEFAULT_INSTANCE);
+    BLE &ble = BLE::Instance();
+    ble.onEventsToProcess(scheduleBleEventsProcessing);
     ble.init(bleInitComplete);
 
-    /* SpinWait for initialization to complete. This is necessary because the
-     * BLE object is used in the main loop below. */
-    while (ble.hasInitialized()  == false) { /* spin loop */ }
+    eventQueue.dispatch_forever();
 
-    // infinite loop
-    while (1) {
-        // check for trigger from periodicCallback()
-        if (triggerSensorPolling && ble.getGapState().connected) {
-            triggerSensorPolling = false;
-
-            // Do blocking calls or whatever is necessary for sensor polling.
-            // In our case, we simply update the HRM measurement.
-            hrmCounter++;
-            if (hrmCounter == 175) { //  100 <= HRM bps <=175
-                hrmCounter = 100;
-            }
-
-            hrService->updateHeartRate(hrmCounter);
-        } else {
-            ble.waitForEvent(); // low power wait for event
-        }
-    }
+    return 0;
 }
