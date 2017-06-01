@@ -1,0 +1,10 @@
+*.launch
+tags
+.settings
+*anjuta*
+*kdev4*
+.pioenvs
+cmake-build-debug
+CMakeListsPrivate.txt
+.idea
+.piolibdeps

@@ -1,0 +1,12 @@
+15:33:49 **** Incremental Build of configuration Default for project firmware ****
+make all 
+*** linking project control ***
+   text	   data	    bss	    dec	    hex	filename
+  14604	  16392	    288	  31284	   7a34	out/lpc4337_m4/control.axf
+copy from `out/lpc4337_m4/control.axf' [elf32-littlearm] to `out/lpc4337_m4/control.bin' [binary]
+*** post-build ***
+mkdir -p ./bin/
+cp out/lpc4337_m4/control.axf ./bin//firmware.axf
+
+15:33:49 Build Finished (took 69ms)
+
