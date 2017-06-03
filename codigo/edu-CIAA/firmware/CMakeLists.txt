@@ -8,9 +8,15 @@ include_directories("/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-C
 include_directories("/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/modules/lpc4337_m4/base/inc")
 include_directories("/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/modules/lpc4337_m4/board/inc")
 include_directories("/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/modules/lpc4337_m4/chip/inc")
+include_directories("/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/modules/lpc4337_m4/sapi/inc")
 
 
-FILE(GLOB_RECURSE SRC_LIST "/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/control/src/*.*")
+FILE(GLOB_RECURSE SRC_LIST "/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/control/src/*.*"
+        "/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/modules/lpc4337_m4/freertos/src/*.*"
+        "/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/modules/lpc4337_m4/base/src/*.*"
+        "/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/modules/lpc4337_m4/board/src/*.*"
+        "/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/modules/lpc4337_m4/chip/src/*.*"
+        "/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/modules/lpc4337_m4/sapi/src/*.*")
 
 add_executable(clion ${SRC_LIST})
 

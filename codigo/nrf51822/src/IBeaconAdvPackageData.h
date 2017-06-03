@@ -29,8 +29,8 @@ namespace BleIBeacon {
     } IBeaconPayload;
 
     bool isAdvertisingDatafromIBeacon(const uint8_t *data, uint8_t lenght) {
-        return (lenght == IBEACON_FIXED_LENGHT &&
-                !memcmp(data, IBEACON_FIXED_PREFIX, sizeof(IBEACON_FIXED_PREFIX)));
+        return (lenght >= IBEACON_FIXED_LENGHT &&
+                !memcmp(data+(lenght-IBEACON_FIXED_LENGHT), IBEACON_FIXED_PREFIX, sizeof(IBEACON_FIXED_PREFIX)));
     }
 }
 

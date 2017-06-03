@@ -63,6 +63,7 @@ public:
         pc.printf("%u ",(unitId & 0xFF00) >> 8);
         pc.printf("%u ",unitId & 0x00FF);*/
 
+        pc.putc('$');
         pc.putc((groupId & 0xFF00) >> 8);
         pc.putc(groupId & 0x00FF);
         pc.putc((unitId & 0xFF00) >> 8);

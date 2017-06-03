@@ -38,9 +38,16 @@
 
 /*==================[inclusions]=============================================*/
 
+#include "chip.h"
 #include "sapi_delay.h"
 #include "sapi_datatypes.h"
 #include "sapi_peripheral_map.h"
+
+#include "print.h"
+#include "string.h"
+
+#include "core_cm4.h"
+#include "cmsis_43xx.h"
 
 /*==================[cplusplus]==============================================*/
 
@@ -68,6 +75,8 @@ typedef struct{
    delay_t  delay;
 } waitForReceiveStringOrTimeout_t;
 
+typedef void (*uart_cb_t)(const uartMap_t uart, uint8_t data);
+
 /*==================[external data declaration]==============================*/
 
 /*==================[external functions declaration]=========================*/
@@ -78,7 +87,8 @@ waitForReceiveStringOrTimeoutState_t waitForReceiveStringOrTimeout(
 bool_t waitForReceiveStringOrTimeoutBlocking(
    uartMap_t uart, char* string, uint16_t stringSize, tick_t timeout );
 
-void uartConfig( uartMap_t uart, uint32_t baudRate );
+void uartConfig( uartMap_t uart, uint32_t baudRate);
+void uartConfigCb( uartMap_t uart, uart_cb_t callback );
 
 bool_t uartReadByte( uartMap_t uart, uint8_t* receivedByte );
 void uartWriteByte( uartMap_t uart, uint8_t byte );

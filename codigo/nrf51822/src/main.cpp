@@ -32,6 +32,7 @@ void periodicCallback(void)
     } else {
         led = 0;
     }
+
 }
 
 void advertisementCallback(const Gap::AdvertisementCallbackParams_t *params)
@@ -147,9 +148,15 @@ void processCmd() {
         switch (cmd_buffer[1]){
             case SERIAL_OPERATOR_START:
                 sendUpdateEnable = true;
+                #ifdef MAIN_DEBUG
+                pc.printf("enable\r\n");
+                #endif
                 break;
             case SERIAL_OPERATOR_END:
                 sendUpdateEnable = false;
+                #ifdef MAIN_DEBUG
+                pc.printf("disable\r\n");
+                #endif
                 break;
         }
 

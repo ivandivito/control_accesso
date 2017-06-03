@@ -1,4 +1,5 @@
-#include "../../control/inc/print.h"
+
+#include "print.h"
 
 static void printchar(char **str, int c) {
 

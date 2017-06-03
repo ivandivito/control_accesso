@@ -106,11 +106,11 @@ void tickWrite( tick_t ticks ) {
 //__attribute__ ((section(".after_vectors")))
 
 /* SysTick Timer ISR Handler */
+/*
 void SysTick_Handler(void) {
    tickCounter++;
 
-	/* Execute Tick Hook function */
 	(* tickHookFunction )( 0 );
 }
-
+*/
 /*==================[end of file]============================================*/
