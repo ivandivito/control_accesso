@@ -12,6 +12,7 @@ include_directories("/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-C
 
 
 FILE(GLOB_RECURSE SRC_LIST "/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/control/src/*.*"
+        "/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/control/inc/*.*"
         "/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/modules/lpc4337_m4/freertos/src/*.*"
         "/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/modules/lpc4337_m4/base/src/*.*"
         "/home/ivan-ubuntu/Documents/embebidos/tp_final/codigo/edu-CIAA/firmware/modules/lpc4337_m4/board/src/*.*"

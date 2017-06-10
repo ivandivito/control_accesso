@@ -5,7 +5,6 @@
 #ifndef NRF51822_BEACON_H
 #define NRF51822_BEACON_H
 
-
 #include "cmsis/arm_math.h"
 #include "string"
 
@@ -42,8 +41,8 @@ public:
     }
 
     uint8_t calcDistance(int8_t rssi){
-        if (rssi == 0) {
-            lastDistance = UINT8_MAX;
+        if (rssi <= 0) {
+            lastDistance = 0xFF;
         } else {
             double ratio = ((double)rssi)/((double)distanceRef);
             if (ratio < 1.0) {
@@ -64,10 +63,10 @@ public:
         pc.printf("%u ",unitId & 0x00FF);*/
 
         pc.putc('$');
-        pc.putc((groupId & 0xFF00) >> 8);
         pc.putc(groupId & 0x00FF);
-        pc.putc((unitId & 0xFF00) >> 8);
+        pc.putc((groupId & 0xFF00) >> 8);
         pc.putc(unitId & 0x00FF);
+        pc.putc((unitId & 0xFF00) >> 8);
         pc.putc(lastDistance);
         pc.putc('\n');
     }

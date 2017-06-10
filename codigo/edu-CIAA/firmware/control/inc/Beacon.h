@@ -5,6 +5,18 @@
 #ifndef CONTROL_BEACON_H
 #define CONTROL_BEACON_H
 
+#include "stdlib.h"
+#include "stdint.h"
+#include "stddef.h"
+#include "string.h"
+
+#include "heap.h"
+#include "portable.h"
+
+#define MALLOC(size) pvPortMalloc((size))
+#define REALLOC(mem,newSize) pvPortRealloc((mem),(newSize))
+#define FREE(ptr) vPortFree(ptr)
+
 #define BEACON_UPDATE_DATA_INIT_CHAR '$'
 #define BEACON_UPDATE_DATA_LAST_CHAR '\n'
 #define BEACON_UPDATE_DATA_LENGTH 7
@@ -13,11 +25,6 @@
 #define BEACON_TIMEOUT_DEFAULT 1000
 #define BEACON_DATABASE_INITIAL_SIZE_DEFAULT 10
 #define BEACON_DATABASE_REALLOC_SIZE_DEFAULT 10
-
-#include <stdlib.h>
-#include "stdint.h"
-#include "stddef.h"
-#include "string.h"
 
 typedef struct BeaconState BeaconState_t;
 
@@ -58,6 +65,6 @@ void addBeaconTracking(uint16_t majorNumber, uint16_t minorNumber, beacon_tracki
 
 void onTimeUpdate(uint32_t timestep);
 
-void onStringUpdate(char* data);
+void onStringUpdate(char* data,uint32_t timestep);
 
 #endif //CONTROL_BEACON_H

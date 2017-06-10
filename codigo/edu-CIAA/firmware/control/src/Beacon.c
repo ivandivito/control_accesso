@@ -24,7 +24,7 @@ void initDatabase(uint32_t beaconTimeout, size_t initialSize, size_t reallocSize
     }
 
     if(beaconDatabase == NULL){
-        //beaconDatabase = malloc(initialSize * sizeof(BeaconState_t));
+        beaconDatabase = MALLOC(initialSize * sizeof(BeaconState_t));
         beaconDatabaseSize = initialSize;
         beaconDatabaseElementCount = 0;
         beaconDatabaseReallocSize = reallocSize;
@@ -35,7 +35,7 @@ void initDatabase(uint32_t beaconTimeout, size_t initialSize, size_t reallocSize
 // libero la memoria alocada y reinicio el estado de las variable
 void deleteDatabase(){
     if(beaconDatabase != NULL){
-        free(beaconDatabase);
+        FREE(beaconDatabase);
         beaconDatabase = NULL;
         beaconDatabaseElementCount = 0;
         beaconDatabaseSize = 0;
@@ -49,7 +49,7 @@ BeaconState_t * createBeaconEntry(uint16_t majorNumber, uint16_t minorNumber){
     //si no hay espacio agrando la base de datos
     if(beaconDatabaseElementCount >= beaconDatabaseSize){
         beaconDatabaseSize += beaconDatabaseReallocSize;
-        //realloc(beaconDatabase,beaconDatabaseSize * sizeof(BeaconState_t));
+        REALLOC(beaconDatabase,beaconDatabaseSize * sizeof(BeaconState_t));
     }
 
     //seteo identificacion
@@ -110,7 +110,7 @@ BeaconState_t *getBeaconState(uint16_t majorNumber, uint16_t minorNumber){
             return &(beaconDatabase[i]);
         }
     }
-    //si n ose encotnro devuelvo NULL
+    //si no se encontro devuelvo NULL
     return NULL;
 
 }
@@ -146,7 +146,7 @@ void onTimeUpdate(uint32_t timestep){
 
 }
 
-void onStringUpdate(char* data){
+void onStringUpdate(char* data,uint32_t timestep){
 
     if(data[0] != BEACON_UPDATE_DATA_INIT_CHAR){
         return;
@@ -156,5 +156,7 @@ void onStringUpdate(char* data){
     }
 
     memcpy(&beaconUpdateTemp,data+1, sizeof(BeaconUpdate_t));
+
+    addUpdate(&beaconUpdateTemp,timestep);
 
 }
