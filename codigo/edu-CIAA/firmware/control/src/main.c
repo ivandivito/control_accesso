@@ -31,18 +31,18 @@ int main(void) {
 	initHardware();
 
     //inicio base de datos
-    //initDatabase(BEACON_DEFAULT,BEACON_DEFAULT,BEACON_DEFAULT);
+    initDatabase(BEACON_DEFAULT,BEACON_DEFAULT,BEACON_DEFAULT);
 
     //inicio tareas
-    //initUartTask(tskIDLE_PRIORITY+1);
-    //initBeaconManagerTask(tskIDLE_PRIORITY+2);
-    //initCmdManagerTask(tskIDLE_PRIORITY+3);
+    initUartTask(tskIDLE_PRIORITY+1);
+    initBeaconManagerTask(tskIDLE_PRIORITY+2);
+    initCmdManagerTask(tskIDLE_PRIORITY+3);
 
     //inicio scheduler
-	//vTaskStartScheduler();
+	vTaskStartScheduler();
 
     //si por alguna razon se termina la ejecucion limpio la base de datos
-    //deleteDatabase();
+    deleteDatabase();
 
 	while (1) {}
 }
