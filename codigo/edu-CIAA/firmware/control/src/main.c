@@ -13,13 +13,13 @@
 
 #include "ctype.h"
 
-#include "heap.h"
+#include "Heap.h"
 #include "main.h"
-#include "uart.h"
-#include "print.h"
+#include "Uart.h"
+#include "Print.h"
 #include "Beacon.h"
-#include "BeaconManager.h"
 #include "CmdManager.h"
+#include "BeaconManager.h"
 
 #define MAIN_DEBUG
 #define BEACON_MANAGER_DEBUG

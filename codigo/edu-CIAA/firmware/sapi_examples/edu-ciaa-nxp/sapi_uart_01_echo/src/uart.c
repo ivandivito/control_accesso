@@ -37,7 +37,7 @@
 
 /*==================[inclusions]=============================================*/
 
-#include "uart.h"         /* <= own header */
+#include "Uart.h"         /* <= own header */
 
 #include "sapi.h"         /* <= sAPI header */
 

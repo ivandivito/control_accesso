@@ -2,7 +2,7 @@
 // Created by ivan-ubuntu on 09/06/17.
 //
 
-#include "uart.h"
+#include "Uart.h"
 
 #define QUEUE_IN_SIZE 64
 #define QUEUE_OUT_SIZE 64

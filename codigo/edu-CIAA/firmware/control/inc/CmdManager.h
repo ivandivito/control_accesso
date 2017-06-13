@@ -26,7 +26,7 @@
 
 #define CMD_BUFFER_SIZE 30
 
-static void cmdManagerTask(void * a);
+void cmdManagerTask(void * a);
 void initCmdManagerTask(uint32_t priority);
 
 size_t getCmdLength();

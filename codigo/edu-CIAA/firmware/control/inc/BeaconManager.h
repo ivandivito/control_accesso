@@ -21,8 +21,8 @@ typedef enum {PRESENCE_MODE,BeaconCbModeMax} BeaconCbMode_t;
 
 void beaconScanInit(bool_t init);
 
-static void beaconManagerTask(void *a);
-static void beaconManagerPeriodicTask(void *a);
+void beaconManagerTask(void *a);
+void beaconManagerPeriodicTask(void *a);
 void initBeaconManagerTask(uint32_t priority);
 
 bool_t sendBeaconState(uint16_t majorAddr,uint16_t minorAddr);

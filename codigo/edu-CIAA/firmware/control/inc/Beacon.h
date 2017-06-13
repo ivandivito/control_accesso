@@ -10,7 +10,7 @@
 #include "stddef.h"
 #include "string.h"
 
-#include "heap.h"
+#include "Heap.h"
 #include "portable.h"
 
 #define MALLOC(size) pvPortMalloc((size))

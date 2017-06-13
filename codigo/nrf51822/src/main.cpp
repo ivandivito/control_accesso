@@ -12,6 +12,8 @@
 #define SERIAL_OPERATOR_START 'S'
 #define SERIAL_OPERATOR_ASSIGN "="
 
+//#define MAIN_DEBUG
+
 #define CMD_BUFFER_SIZE 30
 
 using namespace BleIBeacon;
@@ -24,6 +26,7 @@ Serial pc(P0_9,P0_11);
 bool sendUpdateEnable = false;
 char cmd_buffer[CMD_BUFFER_SIZE];
 int cmd_buffer_index = 0;
+IBeaconPayload_t tempData;
 
 void periodicCallback(void)
 {
@@ -49,13 +52,13 @@ void advertisementCallback(const Gap::AdvertisementCallbackParams_t *params)
 #endif
 
     if(sendUpdateEnable){
-        if(!isAdvertisingDatafromIBeacon(params->advertisingData,params->advertisingDataLen)){
+        if(!isAdvertisingDatafromIBeacon(params->advertisingData,params->advertisingDataLen,&tempData)){
+            pc.puts("ret\r\n");
             return;
         }
 
-        IBeaconPayload_t *IBeaconPayload = (IBeaconPayload_t *) params->advertisingData;
-        uint16_t majorNumber = IBeaconPayload->majorNumberL | IBeaconPayload->majorNumberH << 8;
-        uint16_t minorNumber = IBeaconPayload->minorNumberL | IBeaconPayload->minorNumberH << 8;
+        uint16_t majorNumber = tempData.majorNumberL | tempData.majorNumberH << 8;
+        uint16_t minorNumber = tempData.minorNumberL | tempData.minorNumberH << 8;
 
         #ifdef MAIN_DEBUG
         pc.puts("beacon addr ");
@@ -65,17 +68,17 @@ void advertisementCallback(const Gap::AdvertisementCallbackParams_t *params)
         }
         pc.printf("rssi %d ", params->rssi);
         pc.puts("UUID ");
-        pc.printf("largo: %d :",sizeof(IBeaconPayload->beaconUUID));
-        for (size_t i=0; i< sizeof(IBeaconPayload->beaconUUID); i++) {
-            printf("%02x ", IBeaconPayload->beaconUUID[i]);
+        pc.printf("largo: %d :",sizeof(tempData.beaconUUID));
+        for (size_t i=0; i< sizeof(tempData.beaconUUID); i++) {
+            printf("%02x ", tempData.beaconUUID[i]);
         }
         pc.printf("major: %lu ", (unsigned long) majorNumber);
         pc.printf("minor: %lu ", (unsigned long) minorNumber);
-        pc.printf("rssi ref: %d", IBeaconPayload->rssiRef);
+        pc.printf("rssi ref: %d", tempData.rssiRef);
         pc.puts("\r\n");
         #endif
 
-        Beacon beacon(majorNumber,minorNumber,(uint8_t)(256-IBeaconPayload->rssiRef));
+        Beacon beacon(majorNumber,minorNumber,(uint8_t)(256-tempData.rssiRef));
         beacon.calcDistance(-(params->rssi));
 
         #ifdef MAIN_DEBUG

@@ -8,7 +8,7 @@ char ble_buffer[BLE_BUFFER_SIZE];
 int ble_buffer_index = 0;
 
 //esta tarea procesa la informacion probiniente del modulo ble
-static void beaconManagerTask(void *a){
+void beaconManagerTask(void *a){
 
     char dataByte;
 
@@ -54,7 +54,7 @@ static void beaconManagerTask(void *a){
 }
 
 //esta tarea actualiza el estado de la base de datos
-static void beaconManagerPeriodicTask(void *a){
+void beaconManagerPeriodicTask(void *a){
 
     while(1){
 

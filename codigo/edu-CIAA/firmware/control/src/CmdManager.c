@@ -5,7 +5,7 @@ char cmd_buffer[CMD_BUFFER_SIZE];
 int cmd_buffer_index = 0;
 
 //esta tarea procesa los comandos provinientes por USB
-static void cmdManagerTask(void * a){
+void cmdManagerTask(void * a){
 
     char cmdChar;
 

@@ -28,9 +28,13 @@ namespace BleIBeacon {
         uint8_t rssiRef;
     } IBeaconPayload;
 
-    bool isAdvertisingDatafromIBeacon(const uint8_t *data, uint8_t lenght) {
-        return (lenght >= IBEACON_FIXED_LENGHT &&
-                !memcmp(data+(lenght-IBEACON_FIXED_LENGHT), IBEACON_FIXED_PREFIX, sizeof(IBEACON_FIXED_PREFIX)));
+    bool isAdvertisingDatafromIBeacon(const uint8_t *data, uint8_t lenght,IBeaconPayload_t* conteiner) {
+        if(lenght >= IBEACON_FIXED_LENGHT &&
+                !memcmp(data+(lenght-IBEACON_FIXED_LENGHT), IBEACON_FIXED_PREFIX, sizeof(IBEACON_FIXED_PREFIX))){
+            memcpy(conteiner, data+(lenght-IBEACON_FIXED_LENGHT), sizeof(IBeaconPayload));
+            return true;
+        }
+        return false;
     }
 }
 
