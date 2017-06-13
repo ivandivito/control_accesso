@@ -53,7 +53,6 @@ void advertisementCallback(const Gap::AdvertisementCallbackParams_t *params)
 
     if(sendUpdateEnable){
         if(!isAdvertisingDatafromIBeacon(params->advertisingData,params->advertisingDataLen,&tempData)){
-            pc.puts("ret\r\n");
             return;
         }
 

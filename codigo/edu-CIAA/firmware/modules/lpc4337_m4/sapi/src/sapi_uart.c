@@ -278,7 +278,7 @@ void UART3_IRQHandler(void){
 
     if (Chip_UART_ReadLineStatus(UART_232_LPC) & UART_LSR_RDR) {
         uint8_t receivedByte = Chip_UART_ReadByte(UART_232_LPC);
-        debug_uart("%c",receivedByte);
+        //debug_uart("%c",receivedByte);
         if(uart_232_cb != NULL){
             uart_232_cb(UART_232,receivedByte);
         }
