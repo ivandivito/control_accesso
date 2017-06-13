@@ -67,20 +67,27 @@ void uartUsbOutputTask(void * a){
 }
 
 void uartUsbCallback(const uartMap_t uart, uint8_t data){
+	uartWriteByte(UART_232, data);
+	uartWriteByte(UART_USB, data);
 
+	/*
     portBASE_TYPE higherPriorityTaskWoken = pdFALSE;
 
     xQueueSendToBackFromISR(inputUartUsbQueue, &data, &higherPriorityTaskWoken);
 
     portEND_SWITCHING_ISR(higherPriorityTaskWoken);
+    */
 }
 
 void uart232Callback(const uartMap_t uart, uint8_t data){
+	uartWriteByte(UART_USB, data);
 
+	/*
     portBASE_TYPE higherPriorityTaskWoken = pdFALSE;
 
     xQueueSendToBackFromISR(inputUart232Queue, &data, &higherPriorityTaskWoken);
 
     portEND_SWITCHING_ISR(higherPriorityTaskWoken);
+    */
 }
 

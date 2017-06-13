@@ -10,6 +10,8 @@ static void printchar(uartMap_t uart, int c) {
 		case UART_232:
 			uart232SendByte(c);
 			break;
+		default:
+			break;
 	}
 }
 

@@ -76,7 +76,8 @@ void addUpdate(BeaconUpdate_t *data, uint32_t timestep){
     BeaconState_t *beacon = NULL;
 
     //reviso si este beacon ya existe en la base de datos
-    for (size_t i = 0; i < beaconDatabaseElementCount; ++i) {
+    size_t i;
+    for (i = 0; i < beaconDatabaseElementCount; ++i) {
         if(beaconDatabase[i].majorNumber == data->majorNumber &&
                 beaconDatabase[i].minorNumber == data->minorNumber){
             beacon = &(beaconDatabase[i]);
@@ -104,7 +105,8 @@ void addUpdate(BeaconUpdate_t *data, uint32_t timestep){
 //busco el beacon en la base de datos
 BeaconState_t *getBeaconState(uint16_t majorNumber, uint16_t minorNumber){
 
-    for (size_t i = 0; i < beaconDatabaseElementCount; ++i) {
+    size_t i;
+    for (i = 0; i < beaconDatabaseElementCount; ++i) {
         if(beaconDatabase[i].majorNumber == majorNumber &&
            beaconDatabase[i].minorNumber == minorNumber){
             return &(beaconDatabase[i]);
@@ -132,7 +134,8 @@ void addBeaconTracking(uint16_t majorNumber, uint16_t minorNumber, beacon_tracki
 void onTimeUpdate(uint32_t timestep){
 
     //actualizo el estado de todos los beacons
-    for (size_t i = 0; i < beaconDatabaseElementCount; ++i) {
+	size_t i;
+    for (i = 0; i < beaconDatabaseElementCount; ++i) {
         if(beaconDatabase[i].presenceState == BEACON_STATE_PRESENT &&
                 (timestep - beaconDatabase[i].lastUpdateTime) > beaconDatabaseBeaconTimeout){
             // si paso el timeout cambio el estado
