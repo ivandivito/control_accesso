@@ -23,12 +23,15 @@
 
 #define BEACON_DEFAULT 0
 #define BEACON_TIMEOUT_DEFAULT 1000
+#define BEACON_SAVE_TIMEOUT_DEFAULT 10000
 #define BEACON_DATABASE_INITIAL_SIZE_DEFAULT 10
 #define BEACON_DATABASE_REALLOC_SIZE_DEFAULT 10
 
 typedef struct BeaconState BeaconState_t;
 
 typedef void (*beacon_tracking_cb_t)(BeaconState_t *beaconState);
+typedef void (*beacon_save_database_cb_t)(BeaconState_t *beaconDatabase, size_t size);
+typedef void (*beacon_load_database_cb_t)(BeaconState_t *beaconDatabase, size_t size, size_t* elementCount);
 
 typedef struct BeaconUpdate {
     uint16_t majorNumber;
@@ -51,7 +54,12 @@ struct BeaconState {
     beacon_tracking_cb_t beacon_tracking_cb;
 };
 
-void initDatabase(uint32_t beaconDatabaseBeaconTimeout, size_t initialSize, size_t reallocSize);
+void beaconSetSaveBeaconCb(beacon_save_database_cb_t cb);
+void beaconSetLoadBeaconCb(beacon_load_database_cb_t cb);
+
+void beaconLoadBeaconStatus();
+
+void initDatabase(uint32_t beaconDatabaseBeaconTimeout, uint32_t saveTimeout, size_t initialSize, size_t reallocSize);
 
 void deleteDatabase();
 

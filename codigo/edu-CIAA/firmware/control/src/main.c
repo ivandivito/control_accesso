@@ -2,24 +2,7 @@
 /*==================[inclusions]=============================================*/
 
 
-#include "sapi.h"
-#include "board.h"
-
-#include "FreeRTOSConfig.h"
-#include "FreeRTOS.h"
-#include "task.h"
-#include "portable.h"
-#include "semphr.h"
-
-#include "ctype.h"
-
-#include "Heap.h"
 #include "main.h"
-#include "Uart.h"
-#include "Print.h"
-#include "Beacon.h"
-#include "CmdManager.h"
-#include "BeaconManager.h"
 
 #define MAIN_DEBUG
 #define BEACON_MANAGER_DEBUG
@@ -31,13 +14,15 @@ int main(void) {
 	initHardware();
 
     //inicio base de datos
-    initDatabase(BEACON_DEFAULT,BEACON_DEFAULT,BEACON_DEFAULT);
+    initBeaconDatabase();
 
     //inicio tareas
     initUartTask(tskIDLE_PRIORITY+1);
     initBeaconManagerTask(tskIDLE_PRIORITY+2);
     initCmdManagerTask(tskIDLE_PRIORITY+3);
 
+    //cargo el estado de la eeprom
+    loadStateFromEEPROM();
     //inicio scheduler
 	vTaskStartScheduler();
 
@@ -70,7 +55,6 @@ void initHardware(void) {
     gpioConfig(LED2, GPIO_OUTPUT);
     gpioConfig(LED3, GPIO_OUTPUT);
 
-
     //Conexion con nrf51822
 
     gpioConfig(GPIO1, GPIO_INPUT_PULLDOWN);
@@ -81,8 +65,90 @@ void initHardware(void) {
 
     initUart();
 
+    Board_EEPROM_init();
+
 #ifdef MAIN_DEBUG
     debug_uart("init hard \r\n");
 #endif
+
+}
+
+void loadStateFromEEPROM(){
+
+    //leo la direccion de checkeo
+    uint8_t checkData = Board_EEPROM_readByte(EEPROM_ADDRESS_CHECK);
+    //si la misma es correcta cargo la info y sino solo marco la eeprom como valida
+    if(checkData == EEPROM_CHECK_TOKEN){
+        beaconLoadBeaconStatus();
+    } else {
+        Board_EEPROM_writeByte(EEPROM_ADDRESS_CHECK,EEPROM_CHECK_TOKEN);
+    }
+
+}
+
+void initBeaconDatabase(){
+
+    //inicializo callbacks
+    beaconSetLoadBeaconCb(loadDatabaseFromEEPROM);
+    beaconSetSaveBeaconCb(saveDatabaseToEEPROM);
+
+    //leo la direccion de checkeo
+    uint8_t checkData = Board_EEPROM_readByte(EEPROM_ADDRESS_CHECK);
+    //si la misma es correcta inicio la carga de la base de datos y si no la inicializo por defecto
+    if(checkData == EEPROM_CHECK_TOKEN){
+        size_t databaseSize = 0;
+        uint32_t addr = EEPROM_ADDRESS_BEACON_DATABASE;
+
+        //leo el tamaño de la base de datos
+        if(!Board_EEPROM_readData(&addr, (uint8_t *) &databaseSize, sizeof(size_t))){
+            return;
+        }
+        initDatabase(BEACON_DEFAULT, BEACON_DEFAULT, databaseSize, BEACON_DEFAULT);
+    } else {
+        initDatabase(BEACON_DEFAULT, BEACON_DEFAULT, BEACON_DEFAULT, BEACON_DEFAULT);
+    }
+
+}
+
+
+void loadDatabaseFromEEPROM(BeaconState_t *beaconDatabase, size_t size, size_t* elementCount){
+
+    size_t databaseSize = 0;
+    size_t databaseIndex = 0;
+    uint32_t addr = EEPROM_ADDRESS_BEACON_DATABASE;
+
+    //leo el tamaño de la base de datos
+    if(!Board_EEPROM_readData(&addr, (uint8_t *) &databaseSize, sizeof(size_t))){
+        return;
+    }
+    //reviso si tengo espacio para la base de datos
+    if(databaseSize > size){
+        return;
+    }
+    *elementCount = databaseSize;
+    //leo cada una de las entradas de la base de datos
+    for (;databaseIndex<databaseSize;databaseIndex++){
+        if(!Board_EEPROM_readData(&addr, (uint8_t *) &(beaconDatabase[databaseIndex]), sizeof(BeaconState_t))){
+            return;
+        }
+    }
+
+}
+
+void saveDatabaseToEEPROM(BeaconState_t *beaconDatabase, size_t size){
+
+    size_t databaseIndex = 0;
+    uint32_t addr = EEPROM_ADDRESS_BEACON_DATABASE;
+
+    //guardo el tamaño de la base de datos
+    if(!Board_EEPROM_writeData(&addr, (uint8_t *) &size, sizeof(size_t))){
+        return;
+    }
+    //guardo cada una de las entradas de la base de datos
+    for (;databaseIndex<size;databaseIndex++){
+        if(!Board_EEPROM_writeData(&addr, (uint8_t *) &(beaconDatabase[databaseIndex]), sizeof(BeaconState_t))){
+            return;
+        }
+    }
 
 }

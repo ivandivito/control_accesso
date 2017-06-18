@@ -16,6 +16,7 @@
 #define SERIAL_OPERATOR_START 'S'
 #define SERIAL_OPERATOR_END 'E'
 #define SERIAL_OPERATOR_READ 'R'
+#define SERIAL_OPERATOR_DELETE_STATE 'D'
 
 #define PC_START_MSG "start ble scan\r\n"
 #define PC_END_MSG "end ble scan\r\n"

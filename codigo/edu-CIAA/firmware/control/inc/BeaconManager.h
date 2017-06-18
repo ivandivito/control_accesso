@@ -2,6 +2,7 @@
 #define CONTROL_BEACONMANAGER_H
 
 #include "sapi.h"
+#include "Eeprom.h"
 #include "Beacon.h"
 #include "CmdManager.h"
 
@@ -16,10 +17,15 @@
 
 #define BLE_BUFFER_SIZE 30
 
-typedef enum {CB_LED_1,CB_LED_2,CB_LED_3,CB_LED_RGB,BeaconCbIndexMax} BeaconCbIndex_t;
+typedef void (*beacon_scan_status_cb_t)(bool_t started);
+
+typedef enum {CB_LED_RGB,CB_LED_1,CB_LED_2,CB_LED_3,BeaconCbIndexMax} BeaconCbIndex_t;
 typedef enum {PRESENCE_MODE,BeaconCbModeMax} BeaconCbMode_t;
 
+void beaconSetScanInitCb(beacon_scan_status_cb_t cb);
 void beaconScanInit(bool_t init);
+void beaconSaveBeaconStatus(bool_t started);
+void beaconLoadBeaconStatus();
 
 void beaconManagerTask(void *a);
 void beaconManagerPeriodicTask(void *a);
@@ -30,6 +36,8 @@ bool_t configBeaconCallback(uint16_t majorAddr, uint16_t minorAddr, BeaconCbInde
                             BeaconCbMode_t beaconCbMode);
 
 //definicion de callbacks
+void beaconPresentCbLedRGB(BeaconState_t *beaconState);
+void beaconPresentCbLed(BeaconState_t *beaconState, gpioMap_t gpioMap);
 void beaconPresentCbLed1(BeaconState_t *beaconState);
 void beaconPresentCbLed2(BeaconState_t *beaconState);
 void beaconPresentCbLed3(BeaconState_t *beaconState);

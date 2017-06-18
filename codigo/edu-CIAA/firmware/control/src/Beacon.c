@@ -10,9 +10,23 @@ static size_t beaconDatabaseElementCount = 0;
 static size_t beaconDatabaseSize = 0;
 static size_t beaconDatabaseReallocSize = 0;
 static uint32_t beaconDatabaseBeaconTimeout = 0;
+static uint32_t beaconSaveTimeout = 0;
+static uint32_t beaconLastSaveTimestep = 0;
+
+static beacon_save_database_cb_t save_cb = NULL;
+static beacon_load_database_cb_t load_cb = NULL;
+
+
+void beaconSetSaveBeaconCb(beacon_save_database_cb_t cb){
+    save_cb = cb;
+}
+
+void beaconSetLoadBeaconCb(beacon_load_database_cb_t cb){
+    load_cb = cb;
+}
 
 // inicializo las variables de la base de datos asi como reservo memoria para la misma
-void initDatabase(uint32_t beaconTimeout, size_t initialSize, size_t reallocSize){
+void initDatabase(uint32_t beaconTimeout, uint32_t saveTimeout, size_t initialSize, size_t reallocSize) {
     if(beaconTimeout == 0){
         beaconTimeout = BEACON_TIMEOUT_DEFAULT;
     }
@@ -22,6 +36,9 @@ void initDatabase(uint32_t beaconTimeout, size_t initialSize, size_t reallocSize
     if(reallocSize == 0){
         reallocSize = BEACON_DATABASE_REALLOC_SIZE_DEFAULT;
     }
+    if(saveTimeout == 0){
+        beaconSaveTimeout = BEACON_SAVE_TIMEOUT_DEFAULT;
+    }
 
     if(beaconDatabase == NULL){
         beaconDatabase = MALLOC(initialSize * sizeof(BeaconState_t));
@@ -29,6 +46,9 @@ void initDatabase(uint32_t beaconTimeout, size_t initialSize, size_t reallocSize
         beaconDatabaseElementCount = 0;
         beaconDatabaseReallocSize = reallocSize;
         beaconDatabaseBeaconTimeout = beaconTimeout;
+    }
+    if(load_cb != NULL){
+        load_cb(beaconDatabase,beaconDatabaseSize,&beaconDatabaseElementCount);
     }
 }
 
@@ -40,6 +60,9 @@ void deleteDatabase(){
         beaconDatabaseElementCount = 0;
         beaconDatabaseSize = 0;
         beaconDatabaseReallocSize = 0;
+    }
+    if(save_cb != NULL){
+        save_cb(beaconDatabase,beaconDatabaseElementCount);
     }
 }
 
@@ -128,6 +151,11 @@ void addBeaconTracking(uint16_t majorNumber, uint16_t minorNumber, beacon_tracki
     }
     //agrego callback
     beacon->beacon_tracking_cb = beacon_tracking_cb;
+
+    // si existe el callback lo llamo
+    if(beacon->beacon_tracking_cb != NULL){
+        (beacon->beacon_tracking_cb)(beacon);
+    }
 }
 
 //funcion para actualizar el estado de los beacon segun
@@ -147,6 +175,13 @@ void onTimeUpdate(uint32_t timestep){
         }
     }
 
+    //si se llego al timeout de salvar la base de datos guardo la misma
+    if(timestep - beaconLastSaveTimestep > beaconSaveTimeout){
+        if(save_cb != NULL){
+            save_cb(beaconDatabase,beaconDatabaseElementCount);
+        }
+        beaconLastSaveTimestep = timestep;
+    }
 }
 
 void onStringUpdate(char* data,uint32_t timestep){

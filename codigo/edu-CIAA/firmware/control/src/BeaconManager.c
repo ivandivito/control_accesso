@@ -6,6 +6,7 @@ bool_t beaconScanEnable = false;
 
 char ble_buffer[BLE_BUFFER_SIZE];
 int ble_buffer_index = 0;
+beacon_scan_status_cb_t beacon_scan_status_cb = NULL;
 
 //esta tarea procesa la informacion probiniente del modulo ble
 void beaconManagerTask(void *a){
@@ -70,6 +71,22 @@ void beaconManagerPeriodicTask(void *a){
 void initBeaconManagerTask(uint32_t priority){
     xTaskCreate(beaconManagerTask, (const char *)"beaconManagerTask", configMINIMAL_STACK_SIZE, 0, priority, 0);
     xTaskCreate(beaconManagerPeriodicTask, (const char *)"beaconManagerPeriodicTask", configMINIMAL_STACK_SIZE, 0, priority, 0);
+
+    beaconSetScanInitCb(beaconSaveBeaconStatus);
+}
+
+
+void beaconSaveBeaconStatus(bool_t started){
+    Board_EEPROM_writeByte(EEPROM_ADDRESS_BEACON_STATUS,started);
+}
+void beaconLoadBeaconStatus(){
+    bool_t start = Board_EEPROM_readByte(EEPROM_ADDRESS_BEACON_STATUS);
+
+    beaconScanInit(start);
+}
+
+void beaconSetScanInitCb(beacon_scan_status_cb_t cb){
+    beacon_scan_status_cb = cb;
 }
 
 void beaconScanInit(bool_t init){
@@ -79,6 +96,9 @@ void beaconScanInit(bool_t init){
         ble_uart(BLE_OPERATOR_END);
     }
     beaconScanEnable = init;
+    if(beacon_scan_status_cb != NULL){
+        beacon_scan_status_cb(beaconScanEnable);
+    }
 }
 
 //envio al controlador informacion sobre un estado
@@ -119,6 +139,9 @@ bool_t configBeaconCallback(uint16_t majorAddr, uint16_t minorAddr, BeaconCbInde
     switch(beaconCbMode){
         case PRESENCE_MODE:
             switch (beaconCbIndex){
+                case CB_LED_RGB:
+                    addBeaconTracking(majorAddr, minorAddr, beaconPresentCbLedRGB);
+                    break;
                 case CB_LED_1:
                     addBeaconTracking(majorAddr, minorAddr, beaconPresentCbLed1);
                     break;
@@ -126,9 +149,6 @@ bool_t configBeaconCallback(uint16_t majorAddr, uint16_t minorAddr, BeaconCbInde
                     addBeaconTracking(majorAddr, minorAddr, beaconPresentCbLed2);
                     break;
                 case CB_LED_3:
-                    addBeaconTracking(majorAddr, minorAddr, beaconPresentCbLed3);
-                    break;
-                case CB_LED_RGB:
                     addBeaconTracking(majorAddr, minorAddr, beaconPresentCbLed3);
                     break;
                 default:
@@ -143,41 +163,52 @@ bool_t configBeaconCallback(uint16_t majorAddr, uint16_t minorAddr, BeaconCbInde
 
 }
 
-void beaconPresentCbLed1(BeaconState_t *beaconState){
+void beaconPresentCbLedRGB(BeaconState_t *beaconState){
+
+    if(beaconState==NULL){
+        return;
+    }
+
+    switch(beaconState->presenceState){
+        case BEACON_STATE_PRESENT:
+            gpioWrite(LEDR, OFF);
+            gpioWrite(LEDG, ON);
+            gpioWrite(LEDB, OFF);
+            break;
+        case BEACON_STATE_MISSING:
+            gpioWrite(LEDR, OFF);
+            gpioWrite(LEDG, OFF);
+            gpioWrite(LEDB, ON);
+            break;
+        case BEACON_STATE_LOST:
+            gpioWrite(LEDR, ON);
+            gpioWrite(LEDG, OFF);
+            gpioWrite(LEDB, OFF);
+            break;
+    }
+}
+
+void beaconPresentCbLed(BeaconState_t *beaconState, gpioMap_t gpioMap){
 
     if(beaconState==NULL){
         return;
     }
 
     if(beaconState->presenceState == BEACON_STATE_PRESENT){
-        gpioWrite(LED1, ON);
+        gpioWrite(gpioMap, ON);
     } else {
-        gpioWrite(LED1, FALSE);
+        gpioWrite(gpioMap, FALSE);
     }
+}
+
+void beaconPresentCbLed1(BeaconState_t *beaconState){
+    beaconPresentCbLed(beaconState,LED1);
 }
 
 void beaconPresentCbLed2(BeaconState_t *beaconState){
-
-    if(beaconState==NULL){
-        return;
-    }
-
-    if(beaconState->presenceState == BEACON_STATE_PRESENT){
-        gpioWrite(LED2, ON);
-    } else {
-        gpioWrite(LED2, FALSE);
-    }
+    beaconPresentCbLed(beaconState,LED2);
 }
 
 void beaconPresentCbLed3(BeaconState_t *beaconState){
-
-    if(beaconState==NULL){
-        return;
-    }
-
-    if(beaconState->presenceState == BEACON_STATE_PRESENT){
-        gpioWrite(LED3, ON);
-    } else {
-        gpioWrite(LED3, FALSE);
-    }
+    beaconPresentCbLed(beaconState,LED3);
 }

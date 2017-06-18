@@ -72,6 +72,14 @@ void cmdManagerTask(void * a){
                     }
 
                     break;
+                case SERIAL_OPERATOR_DELETE_STATE:
+#ifdef CMD_MANAGER_DEBUG
+                    debug_uart("SERIAL_OPERATOR_DELETE_STATE\r\n",cmd_buffer);
+#endif
+                    Board_EEPROM_writeByte(EEPROM_ADDRESS_CHECK,0x00);                    
+                    break;
+                default:
+                    break;
             }
 
         } else {
