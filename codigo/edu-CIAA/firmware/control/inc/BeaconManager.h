@@ -17,10 +17,13 @@
 
 #define BLE_BUFFER_SIZE 30
 
+#define PC_BEACON_DISTANCE_CB_NEAR_MAX_DIST 3
+#define PC_BEACON_DISTANCE_CB_MIDDLE_MAX_DIST 8
+
 typedef void (*beacon_scan_status_cb_t)(bool_t started);
 
 typedef enum {CB_LED_RGB,CB_LED_1,CB_LED_2,CB_LED_3,BeaconCbIndexMax} BeaconCbIndex_t;
-typedef enum {PRESENCE_MODE,BeaconCbModeMax} BeaconCbMode_t;
+typedef enum {PRESENCE_MODE,DISTANCE_MODE,BeaconCbModeMax} BeaconCbMode_t;
 
 void beaconSetScanInitCb(beacon_scan_status_cb_t cb);
 void beaconScanInit(bool_t init);
@@ -41,5 +44,7 @@ void beaconPresentCbLed(BeaconState_t *beaconState, gpioMap_t gpioMap);
 void beaconPresentCbLed1(BeaconState_t *beaconState);
 void beaconPresentCbLed2(BeaconState_t *beaconState);
 void beaconPresentCbLed3(BeaconState_t *beaconState);
+
+void beaconDistanceCbLedRGB(BeaconState_t *beaconState);
 
 #endif //CONTROL_BEACONMANAGER_H

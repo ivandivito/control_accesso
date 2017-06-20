@@ -4,6 +4,7 @@
 
 #include "main.h"
 
+#define MAIN_DEVELOPMENT
 #define MAIN_DEBUG
 #define BEACON_MANAGER_DEBUG
 #define CMD_MANAGER_DEBUG
@@ -88,6 +89,7 @@ void loadStateFromEEPROM(){
 
 void initBeaconDatabase(){
 
+#ifndef MAIN_DEVELOPMENT
     //inicializo callbacks
     beaconSetLoadBeaconCb(loadDatabaseFromEEPROM);
     beaconSetSaveBeaconCb(saveDatabaseToEEPROM);
@@ -107,11 +109,23 @@ void initBeaconDatabase(){
     } else {
         initDatabase(BEACON_DEFAULT, BEACON_DEFAULT, BEACON_DEFAULT, BEACON_DEFAULT);
     }
+#else
+    beaconSetLoadBeaconCb(loadDatabaseFromEEPROM);
+    beaconSetSaveBeaconCb(saveDatabaseToEEPROM);
 
+    initDatabase(BEACON_DEFAULT, BEACON_DEFAULT, BEACON_DEFAULT, BEACON_DEFAULT);
+#endif
 }
 
 
 void loadDatabaseFromEEPROM(BeaconState_t *beaconDatabase, size_t size, size_t* elementCount){
+
+#ifndef MAIN_DEVELOPMENT
+    uint8_t checkData = Board_EEPROM_readByte(EEPROM_ADDRESS_CHECK);
+    //si la misma es correcta cargo la info y sino salgo
+    if(checkData != EEPROM_CHECK_TOKEN){
+        return;
+    }
 
     size_t databaseSize = 0;
     size_t databaseIndex = 0;
@@ -132,6 +146,7 @@ void loadDatabaseFromEEPROM(BeaconState_t *beaconDatabase, size_t size, size_t* 
             return;
         }
     }
+#endif
 
 }
 

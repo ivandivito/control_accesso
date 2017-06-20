@@ -76,7 +76,9 @@ void cmdManagerTask(void * a){
 #ifdef CMD_MANAGER_DEBUG
                     debug_uart("SERIAL_OPERATOR_DELETE_STATE\r\n",cmd_buffer);
 #endif
-                    Board_EEPROM_writeByte(EEPROM_ADDRESS_CHECK,0x00);                    
+                    Board_EEPROM_writeByte(EEPROM_ADDRESS_CHECK,0x00);
+                    deleteDatabase();
+                    initDatabase(BEACON_DEFAULT,BEACON_DEFAULT,BEACON_DEFAULT,BEACON_DEFAULT);
                     break;
                 default:
                     break;

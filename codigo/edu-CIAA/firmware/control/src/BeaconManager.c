@@ -155,6 +155,15 @@ bool_t configBeaconCallback(uint16_t majorAddr, uint16_t minorAddr, BeaconCbInde
                     return FALSE;
             }
             break;
+        case DISTANCE_MODE:
+            switch (beaconCbIndex){
+                case CB_LED_RGB:
+                    addBeaconTracking(majorAddr, minorAddr, beaconDistanceCbLedRGB);
+                    break;
+                default:
+                    return FALSE;
+            }
+            break;
         default:
             return FALSE;
     }
@@ -211,4 +220,30 @@ void beaconPresentCbLed2(BeaconState_t *beaconState){
 
 void beaconPresentCbLed3(BeaconState_t *beaconState){
     beaconPresentCbLed(beaconState,LED3);
+}
+
+void beaconDistanceCbLedRGB(BeaconState_t *beaconState){
+    if(beaconState==NULL){
+        return;
+    }
+
+    if(beaconState->presenceState == BEACON_STATE_PRESENT){
+        if(beaconState->lastDistance<PC_BEACON_DISTANCE_CB_NEAR_MAX_DIST){
+            gpioWrite(LEDR, OFF);
+            gpioWrite(LEDG, ON);
+            gpioWrite(LEDB, OFF);
+        } else if (beaconState->lastDistance<PC_BEACON_DISTANCE_CB_MIDDLE_MAX_DIST){
+            gpioWrite(LEDR, OFF);
+            gpioWrite(LEDG, OFF);
+            gpioWrite(LEDB, ON);
+        } else {
+            gpioWrite(LEDR, ON);
+            gpioWrite(LEDG, OFF);
+            gpioWrite(LEDB, OFF);
+        }
+    } else {
+        gpioWrite(LEDR, OFF);
+        gpioWrite(LEDG, OFF);
+        gpioWrite(LEDB, OFF);
+    }
 }
