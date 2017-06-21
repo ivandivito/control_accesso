@@ -33,7 +33,6 @@ class PortDialog: Fragment() {
 
             onUserSelect {
                 selectSerialPort(it)
-                println("select")
             }
 
             maxHeight = 100.0

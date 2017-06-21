@@ -4,10 +4,10 @@
 
 #include "main.h"
 
-#define MAIN_DEVELOPMENT
-#define MAIN_DEBUG
-#define BEACON_MANAGER_DEBUG
-#define CMD_MANAGER_DEBUG
+//#define MAIN_DEVELOPMENT
+//#define MAIN_DEBUG
+//#define BEACON_MANAGER_DEBUG
+//#define CMD_MANAGER_DEBUG
 
 int main(void) {
 
@@ -22,6 +22,8 @@ int main(void) {
     initBeaconManagerTask(tskIDLE_PRIORITY+2);
     initCmdManagerTask(tskIDLE_PRIORITY+3);
 
+    //retraso el inicio para que inicialize el modulo ble
+    delayInaccurate(1000);
     //cargo el estado de la eeprom
     loadStateFromEEPROM();
     //inicio scheduler

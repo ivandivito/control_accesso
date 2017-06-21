@@ -79,6 +79,7 @@ void initBeaconManagerTask(uint32_t priority){
 void beaconSaveBeaconStatus(bool_t started){
     Board_EEPROM_writeByte(EEPROM_ADDRESS_BEACON_STATUS,started);
 }
+
 void beaconLoadBeaconStatus(){
     bool_t start = Board_EEPROM_readByte(EEPROM_ADDRESS_BEACON_STATUS);
 
