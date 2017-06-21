@@ -19,8 +19,8 @@ int main(void) {
 
     //inicio tareas
     initUartTask(tskIDLE_PRIORITY+1);
-    initBeaconManagerTask(tskIDLE_PRIORITY+2);
-    initCmdManagerTask(tskIDLE_PRIORITY+3);
+    initCmdManagerTask(tskIDLE_PRIORITY+2);
+    initBeaconManagerTask(tskIDLE_PRIORITY+3);
 
     //retraso el inicio para que inicialize el modulo ble
     delayInaccurate(1000);
