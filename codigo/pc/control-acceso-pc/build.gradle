@@ -50,7 +50,7 @@ jar {
     manifest {
         attributes(
                 'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-                'Main-Class': 'access_control.app.PulserApp'
+                'Main-Class': 'access_control.app.MainApp'
         )
     }
     from configurations.compile.collect { entry -> zipTree(entry) }
