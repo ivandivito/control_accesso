@@ -123,9 +123,9 @@ bool_t sendBeaconState(uint16_t majorAddr,uint16_t minorAddr){
                 stateString = PC_BEACON_PRESENCE_STATE_MISSING;
                 break;
         }
-        pc_uart("beacon addr: %d %d, presence: %s, last distance: %d\r\n",beaconState->majorNumber,beaconState->minorNumber,stateString,beaconState->lastDistance);
+        pc_uart("report: addr: %d %d, presence: %s, last distance: %d\r\n",beaconState->majorNumber,beaconState->minorNumber,stateString,beaconState->lastDistance);
     } else {
-        pc_uart("beacon addr: %d %d, presence: %s, last distance: %d\r\n",majorAddr,minorAddr,PC_BEACON_PRESENCE_STATE_MISSING,0);
+        pc_uart("report: addr: %d %d, presence: %s, last distance: %d\r\n",majorAddr,minorAddr,PC_BEACON_PRESENCE_STATE_MISSING,0);
     }
 
     return TRUE;
