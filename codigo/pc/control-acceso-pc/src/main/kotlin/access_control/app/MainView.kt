@@ -1,8 +1,7 @@
-package pulser.app
+package access_control.app
 
 import javafx.geometry.Insets
 import javafx.geometry.Pos
-import javafx.scene.control.ComboBox
 import javafx.scene.control.ListCell
 import javafx.scene.control.SelectionMode
 import javafx.scene.control.TextField

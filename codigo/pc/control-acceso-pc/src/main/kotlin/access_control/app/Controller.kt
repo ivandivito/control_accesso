@@ -1,8 +1,6 @@
-package pulser.app
+package access_control.app
 
 import com.fazecast.jSerialComm.SerialPort
-import com.fazecast.jSerialComm.SerialPortDataListener
-import com.fazecast.jSerialComm.SerialPortEvent
 import rx.Observable
 import rx.lang.kotlin.BehaviorSubject
 import rx.lang.kotlin.PublishSubject
@@ -80,7 +78,7 @@ object Channels {
 
     init {
 
-        Channels.usbOutputLine.let {
+        usbOutputLine.let {
 
             requestStartBeaconScan.map { "\$S" }.subscribe(it)
             requestStopBeaconScan.map { "\$E" }.subscribe(it)

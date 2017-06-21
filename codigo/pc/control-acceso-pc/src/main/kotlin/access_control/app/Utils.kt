@@ -1,4 +1,4 @@
-package pulser.app
+package access_control.app
 
 import com.fazecast.jSerialComm.SerialPort
 import com.fazecast.jSerialComm.SerialPortDataListener
