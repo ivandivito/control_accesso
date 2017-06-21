@@ -1,9 +1,9 @@
-package pulser.app
+package access_control.app
 
 import javafx.scene.image.Image
 import tornadofx.*
 
-class PulserApp : App(MainView::class) {
+class MainApp : App(MainView::class) {
 
     init {
         addStageIcon(Image("/app/logo.jpeg"))
